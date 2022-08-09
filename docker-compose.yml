@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  notifications:
+    container_name: notifications
+    build: 
+      context: ./appNotification
+      dockerfile: ./appNotification/Dockerfile
+    ports:
+      -8000:8000
+    volumes:
+      -./appNotification:/app
+    
+  employee_task:
+    container_name: employee_task
+    build:
+      context: ./EmployeeTask
+      dockerfile: ./EmployeeTask/Dockerfile
+    ports:
+      -8001:8001
+    volumes:
+      -./EmployeeTask:/app
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:management
+    ports:
+      - 15672:15672
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
